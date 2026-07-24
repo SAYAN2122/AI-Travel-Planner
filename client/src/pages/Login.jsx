@@ -15,10 +15,11 @@ import {
 } from "lucide-react";
 
 import api from "../utils/axios";
+import { useAuth } from "../context/AuthContext";
 
 function Login() {
   const navigate = useNavigate();
-
+const { login } = useAuth();
   /* ===========================
       State
   =========================== */
@@ -65,19 +66,11 @@ function Login() {
         }
       );
 
-      localStorage.setItem(
-        "token",
-        data.token
-      );
+    login(data.user, data.token);
 
-      if (data.user) {
-        localStorage.setItem(
-          "user",
-          JSON.stringify(data.user)
-        );
-      }
-
-      navigate("/");
+navigate("/planner", {
+  replace: true,
+});
 
     } catch (err) {
 
