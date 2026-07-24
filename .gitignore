@@ -1,0 +1,31 @@
+# Node Modules
+node_modules/
+
+# Environment Variables
+.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# macOS
+.DS_Store
+
+# Vite
+dist/
+
+# Build
+build/
+
+# Coverage
+coverage/
+
+# VS Code
+.vscode/
+
+# Render
+.render
+
+# Misc
+*.log
