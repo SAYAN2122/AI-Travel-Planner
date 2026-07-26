@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 import Navbar from "../components/layout/Navbar";
@@ -18,6 +18,7 @@ import { generateTrip } from "../services/travelService";
 
 function Planner() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [destination, setDestination] = useState("");
   const [days, setDays] = useState(5);
@@ -29,6 +30,33 @@ function Planner() {
   const [food, setFood] = useState("Vegetarian");
 
   const [loading, setLoading] = useState(false);
+
+  // Prefill values coming from the Home page
+  useEffect(() => {
+    if (!location.state) return;
+
+    if (location.state.destination) {
+      setDestination(location.state.destination);
+    }
+
+    if (location.state.days) {
+      const parsedDays = parseInt(location.state.days, 10);
+      if (!Number.isNaN(parsedDays)) {
+        setDays(parsedDays);
+      }
+    }
+
+    if (location.state.budget) {
+      const parsedBudget = parseInt(
+        String(location.state.budget).replace(/[^\d]/g, ""),
+        10
+      );
+
+      if (!Number.isNaN(parsedBudget)) {
+        setBudget(parsedBudget);
+      }
+    }
+  }, [location.state]);
 
   const handleGenerate = async () => {
     if (!destination.trim()) {
@@ -80,9 +108,7 @@ function Planner() {
 
             <h1 className="mt-6 text-5xl font-bold tracking-tight text-slate-900">
               Plan Your Next
-              <span className="text-blue-600">
-                {" "}Adventure
-              </span>
+              <span className="text-blue-600"> Adventure</span>
             </h1>
 
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-600">
@@ -186,9 +212,7 @@ function Planner() {
                     Planning Your Trip...
                   </>
                 ) : (
-                  <>
-                    ✨ Generate AI Trip
-                  </>
+                  <>✨ Generate AI Trip</>
                 )}
               </Button>
 

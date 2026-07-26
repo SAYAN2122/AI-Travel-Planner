@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   Plane,
@@ -19,6 +23,7 @@ import { useAuth } from "../context/AuthContext";
 
 function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
 const { login } = useAuth();
   /* ===========================
       State
@@ -66,10 +71,17 @@ const { login } = useAuth();
         }
       );
 
-    login(data.user, data.token);
+   login(data.user, data.token);
 
-navigate("/planner", {
+const redirectTo =
+  location.state?.redirectTo || "/planner";
+
+const plannerData =
+  location.state?.plannerData || null;
+
+navigate(redirectTo, {
   replace: true,
+  state: plannerData,
 });
 
     } catch (err) {
