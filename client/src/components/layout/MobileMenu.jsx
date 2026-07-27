@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   History,
-  Heart,
   User,
   LogOut,
 } from "lucide-react";
@@ -96,7 +95,6 @@ function MobileMenu({ isOpen, closeMenu }) {
             </div>
           ) : (
             <div className="space-y-2">
-
               <Button
                 variant="secondary"
                 className="w-full justify-start"
@@ -123,20 +121,6 @@ function MobileMenu({ isOpen, closeMenu }) {
                   className="mr-2"
                 />
                 My Trips
-              </Button>
-
-              <Button
-                variant="secondary"
-                className="w-full justify-start"
-                onClick={() =>
-                  handleNavigation("/favorites")
-                }
-              >
-                <Heart
-                  size={18}
-                  className="mr-2"
-                />
-                Favorites
               </Button>
 
               <Button
