@@ -21,6 +21,17 @@ export const generateTrip = async (req, res, next) => {
       foodPreference,
     } = req.body;
 
+    console.log("\n========== NEW TRIP REQUEST ==========");
+    console.log({
+      destination,
+      days,
+      budget,
+      travelStyle,
+      travelers,
+      foodPreference,
+    });
+    console.log("======================================\n");
+
     const prompt = generatePrompt({
       destination,
       days,
@@ -30,9 +41,21 @@ export const generateTrip = async (req, res, next) => {
       foodPreference,
     });
 
+    console.log("\n========== GENERATED PROMPT ==========");
+    console.log(prompt);
+    console.log("======================================\n");
+
     const aiResponse = await generateAIResponse(prompt);
 
+    console.log("\n========== RAW AI RESPONSE ==========");
+    console.log(aiResponse);
+    console.log("=====================================\n");
+
     const tripData = parseAIResponse(aiResponse);
+
+    console.log("\n========== PARSED AI RESPONSE ==========");
+    console.log(JSON.stringify(tripData, null, 2));
+    console.log("========================================\n");
 
     const savedTrip = await TravelHistory.create({
       user: req.user._id,
@@ -57,6 +80,10 @@ export const generateTrip = async (req, res, next) => {
       data: savedTrip,
     });
   } catch (error) {
+    console.error("\n========== GENERATE TRIP ERROR ==========");
+    console.error(error);
+    console.error("=========================================\n");
+
     next(error);
   }
 };

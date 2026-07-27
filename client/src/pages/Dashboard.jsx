@@ -12,7 +12,6 @@ import { getDashboardData } from "../services/dashboardService";
 import {
   Plane,
   MapPinned,
-  Heart,
   IndianRupee,
 } from "lucide-react";
 
@@ -76,12 +75,7 @@ function Dashboard() {
               color="bg-teal-500"
             />
 
-            <StatsCard
-              title="Favorite Style"
-              value={dashboard.favoriteStyle}
-              icon={<Heart className="text-white" />}
-              color="bg-pink-500"
-            />
+        
 
             <StatsCard
               title="Total Budget"

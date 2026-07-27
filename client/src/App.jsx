@@ -15,7 +15,6 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import History from "./pages/History";
-import Favorites from "./pages/Favorites";
 import Profile from "./pages/Profile";
 import TripDetails from "./pages/TripDetails";
 
@@ -89,14 +88,7 @@ function App() {
       />
 
       {/* Favorites */}
-      <Route
-        path="/favorites"
-        element={
-          <ProtectedRoute>
-            <Favorites />
-          </ProtectedRoute>
-        }
-      />
+    
 
       {/* Profile */}
       <Route

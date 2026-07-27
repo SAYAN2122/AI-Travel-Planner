@@ -6,7 +6,6 @@ import {
   Menu,
   X,
   LayoutDashboard,
-  Heart,
   History,
   User,
   LogOut,
@@ -429,12 +428,12 @@ function Navbar() {
                       </Link>
 
                       <Link
-                        to="/favorites"
-                        className="mt-1 flex items-center gap-3 rounded-xl px-4 py-3 transition hover:bg-slate-100"
-                      >
-                        <Heart size={19} />
-                        Favorites
-                      </Link>
+  to="/favorites"
+  className="mt-1 flex items-center gap-3 rounded-xl px-4 py-3 transition hover:bg-slate-100"
+>
+  <Heart size={19} />
+  Favorites
+</Link>
 
                       <Link
                         to="/profile"
