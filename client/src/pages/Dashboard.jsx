@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import {
+  Plane,
+  MapPinned,
+  IndianRupee,
+} from "lucide-react";
 
 import Navbar from "../components/layout/Navbar";
-
 import DashboardHeader from "../components/dashboard/DashboardHeader";
 import StatsCard from "../components/dashboard/StatsCard";
 import QuickActions from "../components/dashboard/QuickActions";
 import RecentTrips from "../components/dashboard/RecentTrips";
 
 import { getDashboardData } from "../services/dashboardService";
-
-import {
-  Plane,
-  MapPinned,
-  IndianRupee,
-} from "lucide-react";
 
 function Dashboard() {
   const [dashboard, setDashboard] = useState(null);
@@ -39,10 +38,27 @@ function Dashboard() {
       <>
         <Navbar />
 
-        <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-orange-50 via-amber-50 to-white">
-          <h1 className="text-2xl font-semibold text-orange-500">
-            Loading Dashboard...
-          </h1>
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="rounded-3xl border border-slate-200 bg-white px-12 py-10 shadow-2xl"
+          >
+            <div className="flex flex-col items-center">
+
+              <div className="mb-6 h-14 w-14 animate-spin rounded-full border-4 border-blue-200 border-t-blue-600" />
+
+              <h2 className="text-2xl font-bold text-slate-900">
+                Loading Dashboard
+              </h2>
+
+              <p className="mt-2 text-slate-500">
+                Preparing your travel statistics...
+              </p>
+
+            </div>
+          </motion.div>
         </div>
       </>
     );
@@ -52,52 +68,66 @@ function Dashboard() {
     <>
       <Navbar />
 
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-white py-16">
-        <div className="mx-auto max-w-7xl px-6">
+      <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+
+        {/* Background Blur Effects */}
+
+        <div className="absolute -left-32 top-0 h-96 w-96 rounded-full bg-blue-400/20 blur-[140px]" />
+
+        <div className="absolute -right-32 bottom-0 h-96 w-96 rounded-full bg-indigo-500/20 blur-[140px]" />
+
+        <div className="relative mx-auto max-w-7xl px-6 py-16">
 
           {/* Header */}
+
           <DashboardHeader />
 
           {/* Statistics */}
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
 
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3"
+          >
             <StatsCard
               title="Trips Planned"
-              value={dashboard.totalTrips}
+              value={dashboard?.totalTrips ?? 0}
               icon={<Plane className="text-white" />}
-              color="bg-orange-500"
+              color="from-blue-600 to-indigo-600"
             />
 
             <StatsCard
               title="Destinations"
-              value={dashboard.totalDestinations}
+              value={dashboard?.totalDestinations ?? 0}
               icon={<MapPinned className="text-white" />}
-              color="bg-teal-500"
+              color="from-cyan-500 to-blue-500"
             />
-
-        
 
             <StatsCard
               title="Total Budget"
-              value={`₹${dashboard.totalBudget.toLocaleString()}`}
+              value={`₹${(
+                dashboard?.totalBudget ?? 0
+              ).toLocaleString()}`}
               icon={<IndianRupee className="text-white" />}
-              color="bg-amber-500"
+              color="from-violet-600 to-indigo-600"
             />
-
-          </div>
+          </motion.div>
 
           {/* Recent Trips */}
-          <div className="mt-12">
-            <RecentTrips trips={dashboard.trips} />
+
+          <div className="mt-20">
+            <RecentTrips trips={dashboard?.trips || []} />
           </div>
 
           {/* Quick Actions */}
-          <div className="mt-12">
+
+          <div className="mt-20">
             <QuickActions />
           </div>
 
         </div>
-      </div>
+      </main>
     </>
   );
 }
